@@ -1,0 +1,8 @@
+experiments/
+**/__pycache__
+deps/
+*.npy
+*.ckpt
+results/
+run_scripts/
+datasets

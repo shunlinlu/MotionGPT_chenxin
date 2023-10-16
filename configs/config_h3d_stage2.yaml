@@ -1,23 +1,23 @@
-NAME: Pretrain_HumanML3D # Experiment names
+NAME: Pretrain_HumanML3D_3e_4 # Experiment names
 ACCELERATOR: 'gpu' # Devices optioncal: “cpu”, “gpu”, “tpu”, “ipu”, “hpu”, “mps, “auto”
 NUM_NODES: 1 # Number of GPU nodes for distributed training
-DEVICE: [0] # Index of gpus eg. [0] or [0,1,2,3]
+DEVICE: [0,1,2,3] # Index of gpus eg. [0] or [0,1,2,3]
 
 TRAIN:
   #---------------------------------
   STAGE: lm_pretrain # stage "vae" , "lm_pretrain", "lm_instruct"
   #---------------------------------
   NUM_WORKERS: 16 # Number of workers
-  BATCH_SIZE: 16 # Size of batches
-  END_EPOCH: 999999 # End epoch
+  BATCH_SIZE: 32 # Size of batches
+  END_EPOCH: 10000 # End epoch
   RESUME: '' # Resume training from this path
   PRETRAINED: '' # Preatrained model path
-  PRETRAINED_VAE: checkpoints/MotionGPT-base/motiongpt_s3_h3d.tar # Vae model path
+  PRETRAINED_VAE: /comp_robot/lushunlin/MotionGPT_chenxin/experiments/mgpt/VQVAE_HumanML3D/checkpoints/epoch=4999-v1.ckpt # Vae model path
 
   OPTIM:
     target: AdamW
     params:
-      lr: 2e-4
+      lr: 3e-4
       betas: [0.9, 0.99]
       weight_decay: 0.0
 
@@ -55,7 +55,7 @@ model:
     motion_vae: ${vq.default}
 
 LOGGER:
-  TYPE: ['tensorboard', 'wandb']
+  TYPE: ['tensorboard']
   VAL_EVERY_STEPS: 10
   WANDB:
     params:

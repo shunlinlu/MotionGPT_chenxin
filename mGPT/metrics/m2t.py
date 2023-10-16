@@ -103,6 +103,8 @@ class M2TMetrics(Metric):
             from nlgmetricverse import NLGMetricverse, load_metric
             metrics = [
                 load_metric("bleu", resulting_name="bleu_1", compute_kwargs={"max_order": 1}),
+                load_metric("bleu", resulting_name="bleu_2", compute_kwargs={"max_order": 2}),
+                load_metric("bleu", resulting_name="bleu_3", compute_kwargs={"max_order": 3}),
                 load_metric("bleu", resulting_name="bleu_4", compute_kwargs={"max_order": 4}),
                 load_metric("rouge"),
                 load_metric("cider"),
@@ -279,7 +281,8 @@ class M2TMetrics(Metric):
         scores = self.nlg_evaluator(predictions=self.pred_texts,
                                     references=self.gt_texts)
         for k in range(1, self.bleu_k + 1):
-            metrics[f"Bleu_{str(k)}"] = torch.tensor(scores[f'bleu_{str(k)}'],
+            # import pdb; pdb.set_trace()
+            metrics[f"Bleu_{str(k)}"] = torch.tensor(scores[f'bleu_{str(k)}']['score'],
                                                      device=self.device)
             
         metrics["ROUGE_L"] = torch.tensor(scores["rouge"]["rougeL"],

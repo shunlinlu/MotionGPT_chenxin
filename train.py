@@ -46,6 +46,7 @@ def main():
     logger.info("model {} loaded".format(cfg.model.target))
 
     # Lightning Trainer
+    #Sgdg
     trainer = pl.Trainer(
         default_root_dir=cfg.FOLDER_EXP,
         max_epochs=cfg.TRAIN.END_EPOCH,
